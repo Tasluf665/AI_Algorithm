@@ -1,5 +1,6 @@
 from pyMaze import maze, agent, COLOR, textLabel
 from queue import PriorityQueue
+import time
 
 
 def heuristic(cell_a, cell_b):
@@ -75,12 +76,24 @@ def display_results(maze_obj, search_path, backtrack_path, solution_path):
 
 
 def main():
-    maze_obj = maze(10, 10)
-    maze_obj.CreateMaze(loadMaze='maze.csv')
+    maze_obj = maze(100, 100) #Modify the maze size. Ex: maze(5, 5)
+    #There is a maze.csv which I save for sumilation. To load the default maze use this line
+    maze_obj.CreateMaze(loadMaze='maze-100-50.csv') 
+    #change the loopPercent value to increase or decrease the cells obstacles number
+    # maze_obj.CreateMaze(loopPercent=50, saveMaze=True) 
 
+    start_time = time.time()
     search_path, backtrack_path, solution_path = astar_solver(maze_obj)
+    end_time = time.time()  # Record the end time
+    execution_time = end_time - start_time  # Calculate execution time
+
     display_results(maze_obj, search_path, backtrack_path, solution_path)
 
+    print('Best-First Search Path Length', len(solution_path) + 1)
+    print('Best-First Search Length', len(search_path))
+    print("Execution Time: ", execution_time)
+
+    #By Defalut maze will always run from (10,10) grid and goal is (1, 1)
     maze_obj.run()
 
 
